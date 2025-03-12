@@ -184,12 +184,12 @@ describe 'ActiveRecord Obstacle Course, Week 5' do
     expected_result = [@order_3, @order_11, @order_5, @order_13, @order_10, @order_15, @order_9]
 
     # ------------------ Using Ruby -------------------
-    order_ids = OrderItem.where(item_id: @item_4.id).map(&:order_id)
-    orders = order_ids.map { |id| Order.find(id) }
+    # order_ids = OrderItem.where(item_id: @item_4.id).map(&:order_id)
+    # orders = order_ids.map { |id| Order.find(id) }
     # -----------------------------------------------------------
 
     # ------------------ Using ActiveRecord ----------------------
-    #  Solution goes here
+    orders = Order.joins(:order_items).where(order_items: {item: @item_4})
     # -----------------------------------------------------------
 
     # Expectation
