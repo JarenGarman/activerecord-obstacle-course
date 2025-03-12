@@ -218,17 +218,17 @@ describe 'ActiveRecord Obstacle Course, Week 5' do
     expected_result = [@item_1, @item_4, @item_9, @item_2, @item_5, @item_10, @item_3, @item_8, @item_7]
 
     # ----------------------- Using Ruby -------------------------
-    items = Item.all
+    # items = Item.all
 
-    ordered_items = items.map do |item|
-      item if item.orders.present?
-    end
+    # ordered_items = items.map do |item|
+    #   item if item.orders.present?
+    # end
 
-    ordered_items = ordered_items.compact
+    # ordered_items = ordered_items.compact
     # ------------------------------------------------------------
 
     # ------------------ ActiveRecord Solution ----------------------
-    # Solution goes here
+    ordered_items = Item.joins(:order_items).order(:created_at).distinct
     # ---------------------------------------------------------------
 
     # Expectations
