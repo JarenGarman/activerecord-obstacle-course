@@ -23,7 +23,7 @@ bundle exec rspec spec/aroc
 ```
 
 *SETUP NOTES:*
-If you run into bundle issues then delete the `Gemfile.lock` and then run `bundle install`. 
+If you run into bundle issues then delete the `Gemfile.lock` and then run `bundle install`.
 
 If you see an error similar to `ERROR: relation "order_items" does not exist`, that likely means that the `rails db:migrate` command did not migrate the test database. If so, you can fix this by running:
 
