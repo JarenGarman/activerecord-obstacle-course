@@ -146,7 +146,7 @@ describe 'ActiveRecord Obstacle Course, Week 6 and Beyond' do
     Bullet.start_request
 
     # ------------------------------------------------------
-    orders = Order.includes([:items])
+    orders = Order.includes(:items)
     # ------------------------------------------------------
 
     # Do not edit below this line
