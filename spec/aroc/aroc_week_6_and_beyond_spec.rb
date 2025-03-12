@@ -19,7 +19,7 @@ describe 'ActiveRecord Obstacle Course, Week 6 and Beyond' do
   # ex. orders_of_500 = Order.where(...)
   # You can comment out the Ruby example after your AR is working.
 
-  xit '27. returns a table of information for all users orders' do
+  it '27. returns a table of information for all users orders' do
     expected_results = [@user_3, @user_1, @user_2]
 
     # using a single ActiveRecord call, fetch a joined object that mimics the
@@ -34,7 +34,7 @@ describe 'ActiveRecord Obstacle Course, Week 6 and Beyond' do
     # -------------------------------------
 
     # ------------------ ActiveRecord Solution ----------------------
-    custom_results = []
+    custom_results = User.joins(:orders).group(:id).select("users.name, count(orders.id) AS total_order_count").order(:total_order_count)
     # ---------------------------------------------------------------
 
     expect(custom_results[0].name).to eq(@user_3.name)
@@ -45,7 +45,7 @@ describe 'ActiveRecord Obstacle Course, Week 6 and Beyond' do
     expect(custom_results[2].total_order_count).to eq(6)
   end
 
-  xit '28. returns a table of information for all users items' do
+  it '28. returns a table of information for all users items' do
     custom_results = [@user_2, @user_3, @user_1]
 
     # using a single ActiveRecord call, fetch a joined object that mimics the
@@ -60,7 +60,7 @@ describe 'ActiveRecord Obstacle Course, Week 6 and Beyond' do
     # ----------------------------------------
 
     # ------------------ ActiveRecord Solution ----------------------
-    custom_results = []
+    custom_results = User.joins(:items).group(:id).select("users.name, count(items.id) AS total_item_count").order(:name)
     # ---------------------------------------------------------------
 
     expect(custom_results[0].name).to eq(@user_2.name)
@@ -71,7 +71,7 @@ describe 'ActiveRecord Obstacle Course, Week 6 and Beyond' do
     expect(custom_results[2].total_item_count).to eq(24)
   end
 
-  xit '29. returns a table of information for all users orders and item counts' do
+  it '29. returns a table of information for all users orders and item counts' do
     # using a single ActiveRecord call, fetch a joined object that mimics the
     # following table of information:
 
@@ -109,7 +109,13 @@ describe 'ActiveRecord Obstacle Course, Week 6 and Beyond' do
     # how will you turn this into the proper ActiveRecord commands?
 
     # ------------------ ActiveRecord Solution ----------------------
-    data = []
+    data = User
+            .joins(:order_items)
+            .group("users.name, orders.id")
+            .select("users.name as user_name")
+            .select("orders.id as order_id")
+            .select("TRUNC(orders.amount / count(order_items.id), 0) as avg_item_cost")
+            .order(user_name: :desc, avg_item_cost: :asc)
     # ---------------------------------------------------------------
 
     expect([data[0].user_name,data[0].order_id,data[0].avg_item_cost]).to eq([@user_1.name, @order_1.id, 50])
@@ -129,7 +135,7 @@ describe 'ActiveRecord Obstacle Course, Week 6 and Beyond' do
     expect([data[14].user_name,data[14].order_id,data[14].avg_item_cost]).to eq([@user_2.name, @order_14.id, 225])
   end
 
-  xit '30. returns the names of items that have been ordered without n+1 queries' do
+  it '30. returns the names of items that have been ordered without n+1 queries' do
     # What is an n+1 query?
     # This video is older, but the concepts explained are still relevant:
     # http://railscasts.com/episodes/372-bullet
@@ -140,7 +146,7 @@ describe 'ActiveRecord Obstacle Course, Week 6 and Beyond' do
     Bullet.start_request
 
     # ------------------------------------------------------
-    orders = Order.all # Edit only this line
+    orders = Order.includes([:items])
     # ------------------------------------------------------
 
     # Do not edit below this line
