@@ -228,7 +228,7 @@ describe 'ActiveRecord Obstacle Course, Week 5' do
     # ------------------------------------------------------------
 
     # ------------------ ActiveRecord Solution ----------------------
-    ordered_items = Item.joins(:order_items).order(:created_at).distinct
+    ordered_items = Item.joins(:order_items).order(:name).distinct
     # ---------------------------------------------------------------
 
     # Expectations
@@ -256,7 +256,7 @@ describe 'ActiveRecord Obstacle Course, Week 5' do
     # ------------------------------------------------------------
 
     # ------------------ Using ActiveRecord ----------------------
-    ordered_items_names = Item.joins(:order_items).order(:created_at).pluck(:name).uniq
+    ordered_items_names = Item.joins(:order_items).order(:name).distinct.pluck(:name)
     # ---------------------------------------------------------------
 
     # Expectations
