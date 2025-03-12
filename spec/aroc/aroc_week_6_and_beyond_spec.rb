@@ -19,7 +19,7 @@ describe 'ActiveRecord Obstacle Course, Week 6 and Beyond' do
   # ex. orders_of_500 = Order.where(...)
   # You can comment out the Ruby example after your AR is working.
 
-  xit '27. returns a table of information for all users orders' do
+  it '27. returns a table of information for all users orders' do
     expected_results = [@user_3, @user_1, @user_2]
 
     # using a single ActiveRecord call, fetch a joined object that mimics the
@@ -34,7 +34,7 @@ describe 'ActiveRecord Obstacle Course, Week 6 and Beyond' do
     # -------------------------------------
 
     # ------------------ ActiveRecord Solution ----------------------
-    custom_results = []
+    custom_results = User.joins(:orders).group(:id).select("users.name, count(orders.id) AS total_order_count").order(total_order_count: :ASC)
     # ---------------------------------------------------------------
 
     expect(custom_results[0].name).to eq(@user_3.name)
