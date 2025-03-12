@@ -112,7 +112,9 @@ describe 'ActiveRecord Obstacle Course, Week 6 and Beyond' do
     data = User
             .joins(:order_items)
             .group("users.name, orders.id")
-            .select("users.name as user_name, orders.id as order_id, TRUNC(orders.amount / count(order_items.id), 0) as avg_item_cost")
+            .select("users.name as user_name")
+            .select("orders.id as order_id")
+            .select("TRUNC(orders.amount / count(order_items.id), 0) as avg_item_cost")
             .order(user_name: :desc, avg_item_cost: :asc)
     # ---------------------------------------------------------------
 
