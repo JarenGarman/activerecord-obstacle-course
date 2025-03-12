@@ -200,13 +200,13 @@ describe 'ActiveRecord Obstacle Course, Week 5' do
     expected_result = [@order_11, @order_5]
 
     # ------------------ Using Ruby -------------------
-    orders = Order.where(user: @user_2)
-    order_ids = OrderItem.where(order_id: orders, item: @item_4).map(&:order_id)
-    orders = order_ids.map { |id| Order.find(id) }
+    # orders = Order.where(user: @user_2)
+    # order_ids = OrderItem.where(order_id: orders, item: @item_4).map(&:order_id)
+    # orders = order_ids.map { |id| Order.find(id) }
     # -----------------------------------------------------------
 
     # ------------------ Using ActiveRecord ----------------------
-    #  Solution goes here
+    orders = Order.joins(:order_items).where(user: @user_2, order_items: {item: @item_4})
     # -----------------------------------------------------------
 
     # Expectation
