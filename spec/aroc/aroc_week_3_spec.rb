@@ -37,12 +37,11 @@ describe 'ActiveRecord Obstacle Course, Week 3' do
 
   it '2. finds order id of smallest order' do
     # ----------------------- Using Raw SQL ----------------------
-    order_id = ActiveRecord::Base.connection.execute('SELECT id FROM orders ORDER BY amount ASC LIMIT 1').first['id']
+    # order_id = ActiveRecord::Base.connection.execute('SELECT id FROM orders ORDER BY amount ASC LIMIT 1').first['id']
     # ------------------------------------------------------------
 
     # ------------------ Using ActiveRecord ----------------------
-    # Solution goes here
-    # Your solution should not contain the actual ID of the order anywhere.
+    order_id = Order.order(amount: :ASC).limit(1).pluck(:id).first
     # ------------------------------------------------------------
 
     # Expectation
