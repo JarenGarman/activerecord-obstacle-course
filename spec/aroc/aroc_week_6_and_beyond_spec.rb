@@ -34,7 +34,7 @@ describe 'ActiveRecord Obstacle Course, Week 6 and Beyond' do
     # -------------------------------------
 
     # ------------------ ActiveRecord Solution ----------------------
-    custom_results = User.joins(:orders).group(:id).select("users.name, count(orders.id) AS total_order_count").order(total_order_count: :ASC)
+    custom_results = User.joins(:orders).group(:id).select("users.name, count(orders.id) AS total_order_count").order(:total_order_count)
     # ---------------------------------------------------------------
 
     expect(custom_results[0].name).to eq(@user_3.name)
@@ -45,7 +45,7 @@ describe 'ActiveRecord Obstacle Course, Week 6 and Beyond' do
     expect(custom_results[2].total_order_count).to eq(6)
   end
 
-  xit '28. returns a table of information for all users items' do
+  it '28. returns a table of information for all users items' do
     custom_results = [@user_2, @user_3, @user_1]
 
     # using a single ActiveRecord call, fetch a joined object that mimics the
@@ -60,7 +60,7 @@ describe 'ActiveRecord Obstacle Course, Week 6 and Beyond' do
     # ----------------------------------------
 
     # ------------------ ActiveRecord Solution ----------------------
-    custom_results = []
+    custom_results = User.joins(:items).group(:id).select("users.name, count(items.id) AS total_item_count").order(:name)
     # ---------------------------------------------------------------
 
     expect(custom_results[0].name).to eq(@user_2.name)
