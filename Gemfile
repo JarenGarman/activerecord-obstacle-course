@@ -69,15 +69,14 @@ end
 
 group :development do
   # Access an interactive console on exception pages or by calling 'console' anywhere in the code.
-  gem "web-console", ">= 3.3.0"
-  gem "listen", ">= 3.0.5", "< 3.2"
+  gem "web-console"
+  gem "listen"
   # Add speed badges [https://github.com/MiniProfiler/rack-mini-profiler]
   # gem "rack-mini-profiler"
 
   gem "standard"
   gem "standard-rails"
   gem "standard-rspec"
-  gem "standard-thread_safety"
   gem "ruby-lsp-rspec"
   gem "pgreset"
   # Speed up commands on slow machines / big apps [https://github.com/rails/spring]
